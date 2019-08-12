@@ -90,71 +90,30 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      bottomNavigationBar: ButtonBar(
-//        type: BottomNavigationBarType.fixed,
-//        backgroundColor: Colors.white,
-//        currentIndex: _currentIndex,
-//        onTap: (int index) {
-//          setState(() {
-//            _currentIndex = index;
-//          });
-//        },
-//        items: [
-//          BottomNavigationBarItem(
-//            title: Container(),
-//            icon: Icon(Icons.add),
-//            activeIcon: Icon(Icons.add),
-//          ),
-//          BottomNavigationBarItem(
-//            title: Container(),
-//            icon: Icon(Icons.add),
-//            activeIcon: Icon(Icons.add),
-//          ),
-//          BottomNavigationBarItem(
-//            title: Container(),
-//            icon: Icon(Icons.add),
-//            activeIcon: Icon(Icons.add),
-//          ),
-//          BottomNavigationBarItem(
-//            title: Container(),
-//            icon: Icon(Icons.add),
-//            activeIcon: Icon(Icons.add),
-//          ),
-//        ],
-        children:<Widget>[]: _items
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: _items
             .map((item) => BottomNavigationBarItem(
-                  title: ConstrainedBox(constraints: BoxConstraints()),
-                  icon: Stack(
-                    children: <Widget>[
-                      Image.asset(
-                        item['icon'],
-                        width: 30.0,
-                      ),
-                      Positioned(
-                        top:-10.0,
-                        right: 0,
-                        child: Text("12"),
-                      ),
-                    ],
+                  title: Container(),
+                  icon: Image.asset(
+                    item['icon'],
+                    width: 30.0,
                   ),
-                  activeIcon:Stack(
-                    children: <Widget>[
-                      Image.asset(
-                        item['activeIcon'],
-                        width: 30.0,
-                      )
-                    ],
-                  ) ,
+                  activeIcon: Image.asset(
+                    item['activeIcon'],
+                    width: 30.0,
+                  ),
                 ))
             .toList(),
       ),
       body: _pages[_currentIndex],
-
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: _incrementCounter,
-//        tooltip: 'Increment',
-//        child: Icon(Icons.add),
-//      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
