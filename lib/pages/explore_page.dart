@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:juejin_app/providers/article_provider.dart';
 import 'package:juejin_app/widgets/custom_list_item_widget.dart';
+import 'package:juejin_app/widgets/custom_list_view_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ExplorePage extends StatelessWidget {
   final double _divideHeight = 0.5;
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +35,10 @@ class ExplorePage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          AspectRatio(
-            aspectRatio: 1080 / 350,
-            child: Swiper(
-              itemBuilder: (BuildContext context, int index) {
-                return Image.asset(
-                  "assets/explore/banner.jpeg",
-                  fit: BoxFit.fill,
-                );
-              },
-              itemCount: 2,
-            ),
-          ),
-          Divider(height: _divideHeight),
-          ExploreTabBtnBar(),
-          Divider(height: _divideHeight),
-          SizedBox(height: 10.0),
-          ExploreCardList(),
-        ],
+      body: ChangeNotifierProvider<ArticleProvider>.value(
+        key: ValueKey(ArticleType.THREE_DAYS_HOTTEST),
+        value: ArticleProvider(ArticleType.THREE_DAYS_HOTTEST)..init(),
+        child: ExploreCardList(),
       ),
     );
   }
@@ -61,7 +50,159 @@ class ExploreCardList extends StatefulWidget {
 }
 
 class _ExploreCardListState extends State<ExploreCardList> {
-  final double _divideHeight = 0.5;
+  final double _divideHeight = 1.0;
+  final List<String> _bannarList = [
+    "banner.jpeg",
+    "bannar2.jpeg",
+  ];
+
+  ArticleProvider _provider;
+  ScrollController _scrollController;
+
+  Future<Null> _refresh() async {
+    await Future.delayed(Duration(seconds: 3), () {
+      _provider.getData(true);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _scrollController = new ScrollController();
+    _scrollController.addListener(getMoreData);
+  }
+
+  getMoreData() {
+    if (!_provider.isLoading && _scrollController.position.extentAfter == 0.0) {
+      _provider.getData(false);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _provider = Provider.of<ArticleProvider>(context);
+  }
+
+  @override
+  void dispose() {
+    if (_scrollController != null) {
+      _scrollController.dispose();
+      _scrollController = null;
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var column = Column(
+      children: [],
+    );
+
+    var list = Provider.of<ArticleProvider>(context).data;
+
+    list.forEach((item) {
+      column.children
+        ..add(Divider(
+          height: 1.0,
+        ))
+        ..add(CustomListItem(
+          key: ValueKey(item.id),
+          height: 100.0,
+          onTap: () {
+            print(11);
+          },
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      item.title,
+                      style: TextStyle(fontSize: 14.0),
+                    ),
+                    SizedBox(height: 4.0),
+                    Text(
+                      "${item.likeCount}人喜欢 · ${item.user.username} · ${timeago.format(DateTime.parse(item.createdAt))}",
+                      style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 15.0,
+              ),
+              item.screenshot != null && item.screenshot.isNotEmpty
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(2.0)),
+                      child: Image.network(
+                        item.screenshot,
+                        height: 70.0,
+                        width: 70.0,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : SizedBox()
+            ],
+          ),
+        ));
+    });
+
+    return ListView(
+      controller: _scrollController,
+      children: <Widget>[
+        AspectRatio(
+          aspectRatio: 1080 / 350,
+          child: Swiper(
+            itemBuilder: (BuildContext context, int i) {
+              return Image.asset(
+                "assets/explore/${_bannarList[i]}",
+                fit: BoxFit.fill,
+              );
+            },
+            itemCount: 2,
+          ),
+        ),
+        Divider(height: _divideHeight),
+        ExploreTabBtnBar(),
+        Divider(height: _divideHeight),
+        SizedBox(height: 10.0),
+        _renderTop(),
+        column,
+        _buildListLoadingMore(),
+      ],
+    );
+  }
+
+  //渲染列表加载更多组件
+  Widget _buildListLoadingMore() {
+    return Container(
+      height: 60.0,
+      alignment: Alignment.center,
+      child: _provider.isHasMore
+          ? Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SizedBox(
+            width: 24.0,
+            height: 24.0,
+            child: CircularProgressIndicator(
+              strokeWidth: 3.0,
+            ),
+          ),
+          SizedBox(width: 20.0),
+          Text("加载中...")
+        ],
+      )
+          : Text("没有更多内容"),
+    );
+  }
 
   Widget _renderTop() {
     return Container(
@@ -87,38 +228,6 @@ class _ExploreCardListState extends State<ExploreCardList> {
     );
   }
 
-//  Widget _renderLoadingMore() {
-//    return Center(
-//      heightFactor: 2.6,
-//      child: CircularProgressIndicator(
-//        strokeWidth: 4.0,
-//      ),
-//    );
-//  }
-
-  @override
-  Widget build(BuildContext context) {
-    return  Column(
-        children: <Widget>[
-          Divider(height: _divideHeight),
-          _renderTop(),
-          Divider(height: _divideHeight),
-          ExploreCard("Vuejs建议和最佳实践", "19人赞 · pilishen · 2小时前",
-              "https://user-gold-cdn.xitu.io/2019/8/6/16c64f8dd56f4e4f?imageView2/1/w/120/h/120/q/85/format/webp/interlace/1"),
-          Divider(height: _divideHeight),
-          ExploreCard("Vuejs建议和最佳实践", "19人赞 · pilishen · 2小时前",
-              "https://user-gold-cdn.xitu.io/2019/8/6/16c64f8dd56f4e4f?imageView2/1/w/120/h/120/q/85/format/webp/interlace/1"),
-          Divider(height: _divideHeight),
-          ExploreCard("Vuejs建议和最佳实践", "19人赞 · pilishen · 2小时前",
-              "https://user-gold-cdn.xitu.io/2019/8/6/16c64f8dd56f4e4f?imageView2/1/w/120/h/120/q/85/format/webp/interlace/1"),
-          Divider(height: _divideHeight),
-          ExploreCard("Vuejs建议和最佳实践", "19人赞 · pilishen · 2小时前",
-              "https://user-gold-cdn.xitu.io/2019/8/6/16c64f8dd56f4e4f?imageView2/1/w/120/h/120/q/85/format/webp/interlace/1"),
-          Divider(height: _divideHeight),
-//          _renderLoadingMore(),
-        ],
-    );
-  }
 }
 
 class ExploreCard extends StatelessWidget {
@@ -132,8 +241,9 @@ class ExploreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomListItem(
-      onTap: () {print(11);},
-      bottomSide: BorderSide.none,
+      onTap: () {
+        print(11);
+      },
       padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

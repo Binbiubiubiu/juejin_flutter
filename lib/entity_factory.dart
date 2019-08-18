@@ -1,4 +1,5 @@
 import 'package:juejin_app/modal/book_entity.dart';
+import 'package:juejin_app/modal/activity_entity.dart';
 import 'package:juejin_app/modal/article_entity.dart';
 
 class EntityFactory {
@@ -7,6 +8,8 @@ class EntityFactory {
       return null;
     } else if (T.toString() == "BookEntity") {
       return BookEntity.fromJson(json) as T;
+    } else if (T.toString() == "ActivityEntity") {
+      return ActivityEntity.fromJson(json) as T;
     } else if (T.toString() == "ArticleEntity") {
       return ArticleEntity.fromJson(json) as T;
     } else {

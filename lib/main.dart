@@ -6,32 +6,32 @@ import 'package:juejin_app/pages/explore_page.dart';
 import 'package:juejin_app/pages/book_page.dart';
 import 'package:juejin_app/pages/me_page.dart';
 
-import 'package:juejin_app/prividers/custom_data_privider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
-void main() => runApp(MyApp());
+void main(){
+  timeago.setLocaleMessages('en', timeago.ZhCnMessages());
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return CustomDataPrivider(
-      theme: CustomThemeData(
-        customListItemBg: Colors.white,
-        customListItemActiveBg: Colors.grey[200],
+
+
+    return MaterialApp(
+      title: '掘金',
+      theme: ThemeData(
+        primaryColor: Color(0xFF377DF6),
+        accentColor: Color(0xFF377DF6),
+        dividerColor: Color(0xFFD8D8D8),
+        backgroundColor: Color(0xFFF6F7F9),
       ),
-      child: MaterialApp(
-        title: '掘金',
-        theme: ThemeData(
-          primaryColor: Color(0xFF377DF6),
-          dividerColor: Color(0xFFD8D8D8),
-          backgroundColor: Color(0xFFF6F7F9),
-        ),
-        home: MyHomePage(),
+      home: MyHomePage(),
 //      initialRoute: '/',
-        routes: {
-          '/login': (ctx) => LoginPage(),
-        },
-      ),
+      routes: {
+        '/login': (ctx) => LoginPage(),
+      },
     );
   }
 }
@@ -39,14 +39,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -84,12 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
     MePage(),
   ];
 
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,

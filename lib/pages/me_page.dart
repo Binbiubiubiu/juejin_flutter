@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juejin_app/pages/login_page.dart';
 
 class MePage extends StatelessWidget {
 
@@ -157,7 +158,7 @@ class _UserCellState extends State<UserCell> {
   String _job = "添加职位@ 添加公司";
 
   void _login() {
-    Navigator.of(context).pushNamed('/login').then((data) {
+    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>LoginPage())).then((data) {
       if (data == null) return;
 
       Map<String, String> userInfo = Map.of(data);
