@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     bool isNight =Provider.of<I18nProvider>(context).isNight;
 
     return MaterialApp(
-      title: "12",
+      title: "掘金",
       theme: isNight
           ? ThemeData.dark()
           : ThemeData.light(),
