@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('initState');
 
   }
 
@@ -39,19 +38,16 @@ class _HomePageState extends State<HomePage>
       {"label": S.of(context).home_tab_2, "type": ArticleType.NEWEST},
       {"label": S.of(context).home_tab_3, "type": ArticleType.THREE_DAYS_HOTTEST},
     ];
-    print('didChangeDependencies');
   }
 
   @override
   void didUpdateWidget(HomePage oldWidget) {
     // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
-    print('didUpdateWidget');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('build');
 
     return Scaffold(
       body: DefaultTabController(
