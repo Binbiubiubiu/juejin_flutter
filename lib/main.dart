@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:juejin_app/providers/i18n_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:timeago/timeago.dart' as timeago;
+
 import 'generated/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -13,7 +13,7 @@ import 'package:juejin_app/pages/book_page.dart';
 import 'package:juejin_app/pages/me_page.dart';
 
 void main() {
-  timeago.setLocaleMessages('en', timeago.ZhCnMessages());
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<I18nProvider>(
@@ -27,9 +27,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    bool isNight =Provider.of<I18nProvider>(context).isNight;
+
     return MaterialApp(
       title: "12",
-      theme: Provider.of<I18nProvider>(context).locale.toString() != 'zh_CN'
+      theme: isNight
           ? ThemeData.dark()
           : ThemeData.light(),
       localizationsDelegates: const [
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
       home: LayoutBuilder(builder: (context, constraints) {
         return Localizations.override(
           context: context,
-          locale: Provider.of<I18nProvider>(context).locale,
+          locale: isNight?Locale('en', ''): Locale('zh', 'CN'),
           child: MyHomePage(),
         );
       }),

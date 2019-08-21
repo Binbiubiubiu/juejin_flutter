@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:juejin_app/generated/i18n.dart';
 import 'package:juejin_app/providers/article_provider.dart';
+import 'package:juejin_app/providers/i18n_provider.dart';
 import 'package:juejin_app/widgets/custom_list_item_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -50,7 +51,7 @@ class ExploreCardList extends StatefulWidget {
 }
 
 class _ExploreCardListState extends State<ExploreCardList> {
-  final double _divideHeight = 1.0;
+
   final List<String> _bannarList = [
     "banner.jpeg",
     "bannar2.jpeg",
@@ -130,7 +131,7 @@ class _ExploreCardListState extends State<ExploreCardList> {
                     ),
                     SizedBox(height: 4.0),
                     Text(
-                      "${item.likeCount}人喜欢 · ${item.user.username} · ${timeago.format(DateTime.parse(item.createdAt))}",
+                      "${item.likeCount}${S.of(context).explore_people_like_to} · ${item.user.username} · ${timeago.format(DateTime.parse(item.createdAt))}",
                       style: TextStyle(fontSize: 12.0, color: Colors.grey),
                     ),
                   ],
@@ -170,9 +171,9 @@ class _ExploreCardListState extends State<ExploreCardList> {
             itemCount: 2,
           ),
         ),
-        Divider(height: _divideHeight),
+        Divider(height: 1.0),
         ExploreTabBtnBar(),
-        Divider(height: _divideHeight),
+        Divider(height: 1.0),
         SizedBox(height: 10.0),
         _renderTop(),
         column,
@@ -198,29 +199,31 @@ class _ExploreCardListState extends State<ExploreCardList> {
             ),
           ),
           SizedBox(width: 20.0),
-          Text("加载中...")
+          Text(S.of(context).widget_loading_more)
         ],
       )
-          : Text("没有更多内容"),
+          : Text(S.of(context).widget_no_more_content),
     );
   }
 
   Widget _renderTop() {
     return Container(
-      color: Color(0x10ffffff),
+      color: Provider.of<I18nProvider>(context).isNight
+          ? Color(0x10ffffff)
+          : Color(0xffffffff),
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: Row(
         children: <Widget>[
           Image.asset("assets/explore/explorer_hot_small.png", height: 20.0),
           SizedBox(width: 8.0),
-          Expanded(child: Text("热门文章")),
+          Expanded(child: Text(S.of(context).explore_popular_articles)),
           GestureDetector(
             child: Row(
               children: <Widget>[
                 Image.asset("assets/explore/explorer_tag_settings.png",
                     height: 20.0),
                 SizedBox(width: 4.0),
-                Text("定制热门")
+                Text(S.of(context).explore_custom_hot)
               ],
             ),
           ),
@@ -287,15 +290,17 @@ class ExploreTabBtnBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ExploreTabBtn("文章榜", "explorer_entry_board.png"),
-          ExploreTabBtn("作者榜", "explorer_user_board.png"),
-          ExploreTabBtn("看一看", "explorer_followee_liked.png", tag: "99+"),
-          ExploreTabBtn("话题广场", "explorer_topic_square.png"),
-          ExploreTabBtn("活动", "explorer_entry_board.png"),
+          ExploreTabBtn(S.of(context).explore_article_list, "explorer_entry_board.png"),
+          ExploreTabBtn(S.of(context).explore_author_list, "explorer_user_board.png"),
+          ExploreTabBtn(S.of(context).explore_look_list, "explorer_followee_liked.png", tag: "99+"),
+          ExploreTabBtn(S.of(context).explore_topic_square, "explorer_topic_square.png"),
+          ExploreTabBtn(S.of(context).explore_activity_list, "explorer_entry_board.png"),
         ],
       ),
       decoration: BoxDecoration(
-        color: Color(0x10ffffff),
+        color: Provider.of<I18nProvider>(context).isNight
+            ? Color(0xffffffff)
+            : Color(0x10ffffff),
       ),
     );
   }

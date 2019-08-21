@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juejin_app/generated/i18n.dart';
 
 import 'package:juejin_app/widgets/custom_list_view_widget.dart';
 import 'package:juejin_app/widgets/custom_list_item_widget.dart';
@@ -30,15 +31,15 @@ class _BookPageState extends State<BookPage> {
               ),
               tabs: <Widget>[
                 Tab(
-                  child: Center(
-                    widthFactor: 2.0,
-                    child: Text("全部"),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(S.of(context).book_all),
                   ),
                 ),
                 Tab(
-                  child: Center(
-                    widthFactor: 2.0,
-                    child: Text("已购"),
+                  child:  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(S.of(context).book_already_bought),
                   ),
                 )
               ],
@@ -136,6 +137,7 @@ class _BookTabPageState extends State<BookTabPage> {
                       TextSpan(
                         text: book.userData.username,
                         style: TextStyle(
+                          color: Theme.of(context).textTheme.title.color,
                             fontWeight: FontWeight.w400,
                             fontSize: 12.0),
                       ),
@@ -147,13 +149,13 @@ class _BookTabPageState extends State<BookTabPage> {
                               ? Text("")
                               : Image.asset(
                                   "assets/book/ic_user_big_lv${book.userData.level}.png",
-                                  height: 10.0,
+                                  height: 12.0,
                                 ),
                         ),
                       ),
                     ]),
                   ),
-                  SizedBox(height: 4.0),
+//                  SizedBox(height: 4.0),
                   Text(
                     "${book.lastSectionCount} 小节 · ${book.buyCount}人已购买",
                     style: TextStyle(

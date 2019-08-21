@@ -16,40 +16,57 @@ class MePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView(
-        children: _renderListView(),
+        children: _renderListView(context),
       ),
     );
   }
 
-  List<Widget> _renderListView() {
-    final List list1 = [
-      {"icon": "assets/me/ic_notification.png", "title": "消息中心", "action": ""},
+  List<Widget> _renderListView(BuildContext context) {
+    final List<dynamic> list1 = [
+      {
+        "icon": "assets/me/ic_notification.png",
+        "title": S.of(context).me_message_center,
+        "action": ""
+      },
       {
         "icon": "assets/me/user_liked_pin.png",
-        "title": "我赞过的",
-        "action": "215篇"
+        "title": S.of(context).me_my_like,
+        "action": "215"
       },
       {
         "icon": "assets/me/user_collectionset.png",
-        "title": "收藏集",
-        "action": "1个"
+        "title": S.of(context).me_collection,
+        "action": "1"
       },
-      {"icon": "assets/me/user_buy.png", "title": "已购小册", "action": "0本"},
+      {
+        "icon": "assets/me/user_buy.png",
+        "title": S.of(context).me_already_bought_small_volumes,
+        "action": "0"
+      },
       {
         "icon": "assets/me/ic_user_data_read.png",
-        "title": "阅读过的文章",
-        "action": "215篇"
+        "title": S.of(context).me_read_the_article,
+        "action": "215"
       },
-      {"icon": "assets/me/ic_dynamic_tag.png", "title": "标签管理", "action": "80个"}
+      {
+        "icon": "assets/me/ic_dynamic_tag.png",
+        "title": S.of(context).me_label_management,
+        "action": "80"
+      }
     ];
 
-    final List list2 = [
+    final List<dynamic> list2 = [
+      "switchlTile",
       {
-        "icon": "assets/me/ic_user_data_read.png",
-        "title": "阅读过的文章",
+        "icon": "assets/me/icon_feed_back.png",
+        "title": S.of(context).me_feedback,
         "action": ""
       },
-      {"icon": "assets/me/ic_dynamic_tag.png", "title": "标签管理", "action": ""}
+      {
+        "icon": "assets/me/settings.png",
+        "title": S.of(context).me_setting,
+        "action": ""
+      }
     ];
 
     List<Widget> _renderList = [
@@ -70,16 +87,17 @@ class MePage extends StatelessWidget {
 
     _renderList.addAll([
       SizedBox(height: 10.0),
-      EveningCellItem(),
     ]);
 
     _renderList.addAll(ListTile.divideTiles(
-      tiles: list2.map((item) => CellItem(
-            icon: item["icon"],
-            title: item["title"],
-            action: item["action"],
-            onTap: () {},
-          )),
+      tiles: list2.map((item) => item == 'switchlTile'
+          ? EveningCellItem()
+          : CellItem(
+              icon: item["icon"],
+              title: item["title"],
+              action: item["action"],
+              onTap: () {},
+            )),
       color: Colors.grey,
     ).toList());
 
@@ -108,7 +126,9 @@ class CellItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color(0x10FFFFFF),
+      color: Provider.of<I18nProvider>(context).isNight
+          ? Color(0x10ffffff)
+          : Color(0xffffffff),
       child: ListTile(
         dense: true,
         onTap: onTap,
@@ -141,29 +161,27 @@ class _EveningCellItemState extends State<EveningCellItem> {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Color(0x10FFFFFF),
-        border: Border(
-          bottom: Divider.createBorderSide(context,width: 1.6, color: Theme.of(context).dividerColor),
-        ),
-      ),
+    return Material(
+      color: Provider.of<I18nProvider>(context).isNight
+          ? Color(0x10ffffff)
+          : Color(0xffffffff),
       child: SwitchListTile(
         dense: true,
-        value: Provider.of<I18nProvider>(context).locale.toString() != 'zh_CN',
+        value: Provider.of<I18nProvider>(context).isNight,
         onChanged: (val) {
           setState(() {
             isOk = val;
           });
-          print(Provider.of<I18nProvider>(context).locale.toLanguageTag());
           Provider.of<I18nProvider>(context)
-              .setLocale(val ? Locale("en", "") : Locale("zh", "CN"));
+              .setIsNight();
         },
         secondary: Image.asset(
           "assets/me/ic_night.png",
           width: 24.0,
         ),
-        title: Text("夜间模式", style: TextStyle(fontSize: 14.0)),
+        title: Text(
+            isOk ? S.of(context).me_day_mode : S.of(context).me_night_mode,
+            style: TextStyle(fontSize: 14.0)),
       ),
     );
   }
@@ -245,7 +263,9 @@ class _UserCellState extends State<UserCell> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color(0x10FFFFFF),
+      color: Provider.of<I18nProvider>(context).isNight
+          ? Color(0x10ffffff)
+          : Color(0xffffffff),
       child: ListTile(
         onTap: _login,
         contentPadding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),

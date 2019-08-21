@@ -73,17 +73,23 @@ class _HomePageState extends State<HomePage>
                   highlightColor: Color.fromRGBO(255, 255, 255, 0.4),
                   child: Row(
                     children: <Widget>[
+
                       Icon(Icons.search),
                       SizedBox(
                         width: 8.0,
                       ),
-                      Text(
-                        S.of(context).appbar_search_placeholder,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Color.fromRGBO(255, 255, 255, 0.4),
-                        ),
+                      Expanded(
+                        child:Text(
+                          S.of(context).appbar_search_placeholder,
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Color.fromRGBO(255, 255, 255, 0.4),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ) ,
                       )
+
                     ],
                   ),
                 ),
@@ -125,8 +131,8 @@ class _HomePageState extends State<HomePage>
                         tabs: _tabList
                             .map<Widget>((item) =>
                             Tab(
-                              child: Center(
-                                widthFactor: 1.6,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.0),
                                 child: Text(item["label"]),
                               ),
                             ))

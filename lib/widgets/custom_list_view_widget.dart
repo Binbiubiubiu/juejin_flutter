@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:juejin_app/generated/i18n.dart';
 import 'package:provider/provider.dart';
 
 class CustomListView<T> extends StatefulWidget {
@@ -124,7 +125,7 @@ class _CustomListViewState<T> extends State<CustomListView> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Image.asset("assets/book/placeholder_no_xiaoce.png", width: 80.0),
-              Text("暂无内容", style: TextStyle(color: Colors.grey[400]))
+              Text(S.of(context).widget_empty_text, style: TextStyle(color: Colors.grey[400]))
             ],
           ),
         ),
@@ -149,10 +150,10 @@ class _CustomListViewState<T> extends State<CustomListView> {
                   ),
                 ),
                 SizedBox(width: 20.0),
-                Text("加载中...")
+                Text(S.of(context).widget_loading_more)
               ],
             )
-          : Text("没有更多内容"),
+          : Text(S.of(context).widget_no_more_content),
     );
   }
 }
