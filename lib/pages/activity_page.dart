@@ -37,6 +37,13 @@ class _ActivityPageState extends State<ActivityPage> {
         _isShowFloatingBtn = _controller.offset > 0;
       });
     });
+
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     _tabs = [
       {"label": S.of(context).activity_open_source_project, "topIc": ActivityTopIc.KYTJ},
       {"label": S.of(context).activity_internal_recruitment, "topIc": ActivityTopIc.NTZP},
@@ -45,7 +52,7 @@ class _ActivityPageState extends State<ActivityPage> {
       {"label": S.of(context).activity_application_of_amway, "topIc": ActivityTopIc.YYAL},
       {"label": S.of(context).activity_development_tools, "topIc": ActivityTopIc.KFGJ},
       {"label": S.of(context).activity_new_information, "topIc": ActivityTopIc.XWZX},
-    ]
+    ];
   }
 
   @override
@@ -180,7 +187,7 @@ class _ActivityTabPageState extends State<ActivityTabPage> {
                       ),
                     ),
                     decoration: BoxDecoration(
-                        color: Colors.grey[100],
+                        color: Color(0x77F5F5F5),
                         border:
                             Border.all(color: Colors.grey[400], width: 0.5)),
                   ),
