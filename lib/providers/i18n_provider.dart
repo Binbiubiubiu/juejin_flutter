@@ -11,13 +11,11 @@ class I18nProvider with ChangeNotifier {
 
   I18nProvider() : super();
 
-  init(){
-    timeago.setLocaleMessages(_locale.countryCode, timeago.ZhCnMessages());
-  }
+
 
   setIsNight(){
     _isNight=!_isNight;
-    timeago.setLocaleMessages(_isNight?'zh':'en', timeago.ZhCnMessages());
+    timeago.setLocaleMessages('en', _isNight?timeago.EnMessages():timeago.ZhCnMessages());
     notifyListeners();
   }
 

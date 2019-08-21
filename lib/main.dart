@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:juejin_app/providers/i18n_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:timeago/timeago.dart' as timeago;
 import 'generated/i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -13,8 +13,12 @@ import 'package:juejin_app/pages/book_page.dart';
 import 'package:juejin_app/pages/me_page.dart';
 
 void main() {
+//  timeago.setLocaleMessages('zh-CN', timeago.ZhCnMessages());
+//  timeago.setLocaleMessages('zh_cn', timeago.ZhCnMessages());
+  timeago.setLocaleMessages('en', timeago.ZhCnMessages());
 
   runApp(MultiProvider(
+
     providers: [
       ChangeNotifierProvider<I18nProvider>(
           builder: (context) => I18nProvider()),
