@@ -62,6 +62,7 @@ class S implements WidgetsLocalizations {
   String get me_night_mode => "night mode";
   String get me_read_the_article => "read the article";
   String get me_setting => "setting";
+  String get me_title => "Me";
   String get widget_empty_text => "no content";
   String get widget_loading_more => "loading more...";
   String get widget_no_more_content => "no more content";
@@ -111,6 +112,8 @@ class $zh_CN extends S {
   String get explore_popular_articles => "热门文章";
   @override
   String get appbar_search_placeholder => "搜索文章、用户、标签";
+  @override
+  String get me_title => "我";
   @override
   String get me_message_center => "消息中心";
   @override

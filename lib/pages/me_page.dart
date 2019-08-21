@@ -10,7 +10,7 @@ class MePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '我',
+          S.of(context).me_title,
           style: TextStyle(fontSize: 20.0),
         ),
         centerTitle: true,
