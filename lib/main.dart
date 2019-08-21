@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       localeResolutionCallback:
           S.delegate.resolution(fallback: const Locale('zh', 'CN')),
       supportedLocales: S.delegate.supportedLocales,
-      home: LayoutBuilder(builder: (context, constraints) {
+      home: Builder(builder: (context) {
         return Localizations.override(
           context: context,
           locale: isNight?Locale('en', ''): Locale('zh', 'CN'),

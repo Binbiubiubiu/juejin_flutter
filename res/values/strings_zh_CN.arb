@@ -43,5 +43,14 @@
   "activity_application_of_amway": "应用安利",
   "activity_development_tools": "开发工具",
   "activity_new_information": "New资讯",
-  "me_title": "我"
+  "me_title": "我",
+  "me_weibo": "微博",
+  "me_wechat": "微信",
+  "me_login_with_other_accounts": "其他账号登录",
+  "me_forgot_password": "忘记密码？",
+  "me_registered_account": "注册账号",
+  "me_phone_mail": "手机号/邮箱",
+  "me_password": "密码",
+  "me_login": "登录",
+  "me_the_denver_nuggets": "掘金"
 }

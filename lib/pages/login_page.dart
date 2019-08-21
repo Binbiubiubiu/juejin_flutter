@@ -1,39 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:juejin_app/generated/i18n.dart';
+import 'package:juejin_app/providers/i18n_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        title: null,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: ListView(
-        padding: EdgeInsets.only(left: 24.0, right: 24.0),
-        children: <Widget>[
-          LoginLogo(),
-          LoginForm(),
-          SizedBox(height: 16.0),
-          LoginTextBtn(),
-          SizedBox(height: 66.0),
-          LoginThirdLoginBtn(),
-          SizedBox(height: 80.0),
-          Center(
-              child: Text(
-            '掘金 · juejin.im',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14.0,
+    return Builder(builder: (context) {
+      return Localizations.override(
+        context: context,
+        locale: Provider.of<I18nProvider>(context).isNight
+            ? Locale('en', '')
+            : Locale('zh', 'CN'),
+        child: Scaffold(
+          backgroundColor: Theme.of(context).primaryColor,
+          appBar: AppBar(
+            title: null,
+            elevation: 0.0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-          ))
-        ],
+          ),
+          body: ListView(
+            padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            children: <Widget>[
+              LoginLogo(),
+              LoginForm(),
+              SizedBox(height: 16.0),
+              LoginTextBtn(),
+              SizedBox(height: 66.0),
+              LoginThirdLoginBtn(),
+              SizedBox(height: 80.0),
+              CenterLogoText(),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+class CenterLogoText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "${S.of(context).me_the_denver_nuggets} · juejin.im",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14.0,
+        ),
       ),
     );
   }
@@ -45,16 +64,16 @@ class LoginThirdLoginBtn extends StatelessWidget {
     List _btns = [
       {
         'image': 'assets/login/weibo_login.png',
-        'text': '微博',
+        'text': S.of(context).me_weibo,
         'onPress': () {
-          print('微博');
+          print(S.of(context).me_weibo);
         }
       },
       {
         'image': 'assets/login/wechat_login.png',
-        'text': '微信',
+        'text': S.of(context).me_wechat,
         'onPress': () {
-          print('微信');
+          print(S.of(context).me_wechat);
         }
       },
       {
@@ -87,7 +106,7 @@ class LoginThirdLoginBtn extends StatelessWidget {
                   padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   color: Theme.of(context).primaryColor,
                   child: Text(
-                    '其他账号登录',
+                    S.of(context).me_login_with_other_accounts,
                     style: TextStyle(
                       fontSize: 12.0,
                     ),
@@ -140,7 +159,7 @@ class LoginTextBtn extends StatelessWidget {
         GestureDetector(
           onTap: () {},
           child: Text(
-            '忘记密码？',
+            S.of(context).me_forgot_password,
             style: TextStyle(
               fontSize: 14.0,
               color: Color.fromRGBO(255, 255, 255, 0.5),
@@ -150,7 +169,7 @@ class LoginTextBtn extends StatelessWidget {
         GestureDetector(
           onTap: () {},
           child: Text(
-            '注册账号',
+            S.of(context).me_registered_account,
             style: TextStyle(
               fontSize: 14.0,
               color: Color.fromRGBO(255, 255, 255, 1.0),
@@ -195,7 +214,7 @@ class _LoginFormState extends State<LoginForm> {
           onSubmitted: (val) => _username = val,
           style: TextStyle(fontSize: 16.0),
           decoration: InputDecoration(
-            hintText: '手机号/邮箱',
+            hintText: S.of(context).me_phone_mail,
             hintStyle: TextStyle(
               color: Color(0xFFD2D2D2),
             ),
@@ -217,7 +236,7 @@ class _LoginFormState extends State<LoginForm> {
           obscureText: true,
           style: TextStyle(fontSize: 16.0),
           decoration: InputDecoration(
-            hintText: '密码',
+            hintText: S.of(context).me_password,
             hintStyle: TextStyle(
               color: Color(0xFFD2D2D2),
             ),
@@ -240,7 +259,7 @@ class _LoginFormState extends State<LoginForm> {
             onPressed: _submitForm,
             color: Color(0xFF2C68D1),
             child: Text(
-              '登录',
+              S.of(context).me_login,
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,
