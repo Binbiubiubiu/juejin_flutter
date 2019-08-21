@@ -23,9 +23,6 @@ class _ActivityPageState extends State<ActivityPage> {
   static const XWZX = '5c46a17f092dcb4737217152';
 
   List _tabs = [
-    {"label": "关注", "topIc": ActivityTopIc.KYTJ},
-    {"label": "推荐", "topIc": ActivityTopIc.NTZP},
-    {"label": "热门", "topIc": ActivityTopIc.JJXQ},
     {"label": "开源项目", "topIc": ActivityTopIc.KYTJ},
     {"label": "内部招聘", "topIc": ActivityTopIc.NTZP},
     {"label": "掘金相亲", "topIc": ActivityTopIc.JJXQ},
@@ -122,8 +119,7 @@ class ActivityTabPage extends StatefulWidget {
   _ActivityTabPageState createState() => _ActivityTabPageState();
 }
 
-class _ActivityTabPageState extends State<ActivityTabPage>
-    with AutomaticKeepAliveClientMixin {
+class _ActivityTabPageState extends State<ActivityTabPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ActivityProvider>.value(
@@ -131,7 +127,7 @@ class _ActivityTabPageState extends State<ActivityTabPage>
       value: ActivityProvider(widget.type)..init(),
       child: CustomListView<ActivityProvider>(
         separatorBuilder: (BuildContext context, int index) =>
-            Container(color: Colors.grey[200], height: 10.0),
+            Container(height: 10.0),
         itemBuilder: _renderBookItem,
       ),
     );
@@ -145,7 +141,7 @@ class _ActivityTabPageState extends State<ActivityTabPage>
     return Stack(children: <Widget>[
       CustomListItem(
         onTap: () {
-          print("book");
+         print('11');
         },
         padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 15.0),
       ),
@@ -334,7 +330,4 @@ class _ActivityTabPageState extends State<ActivityTabPage>
   }
 
 
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

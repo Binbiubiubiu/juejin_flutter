@@ -1,0 +1,10 @@
+{
+  "app_title": "JueJin",
+  "home_tab_1": "POPULAR",
+  "home_tab_2": "NEWEST",
+  "home_tab_3": "THREE_DAYS_HOTTEST",
+  "appbar_search_placeholder": "Search for articles, users, labels",
+  "me_login_title_placeholder": "Login/registration",
+  "me_login_subtitle_placeholder": "Add position @ add company",
+  "home_tag": "Tags"
+}

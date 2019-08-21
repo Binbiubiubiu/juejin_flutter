@@ -21,10 +21,42 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get app_title => "JueJin";
+  String get appbar_search_placeholder => "Search for articles, users, labels";
+  String get home_tab_1 => "POPULAR";
+  String get home_tab_2 => "NEWEST";
+  String get home_tab_3 => "THREE_DAYS_HOTTEST";
+  String get home_tag => "Tags";
+  String get me_login_subtitle_placeholder => "Add position @ add company";
+  String get me_login_title_placeholder => "Login/registration";
 }
 
 class $en extends S {
   const $en();
+}
+
+class $zh_CN extends S {
+  const $zh_CN();
+
+  @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get home_tag => "标签";
+  @override
+  String get home_tab_1 => "热门";
+  @override
+  String get appbar_search_placeholder => "搜索文章、用户、标签";
+  @override
+  String get app_title => "掘金";
+  @override
+  String get me_login_title_placeholder => "登录/注册";
+  @override
+  String get me_login_subtitle_placeholder => "添加职位@ 添加公司";
+  @override
+  String get home_tab_2 => "最新";
+  @override
+  String get home_tab_3 => "热榜";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
@@ -33,6 +65,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale("en", ""),
+      Locale("zh", "CN"),
     ];
   }
 
@@ -59,6 +92,9 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {
       switch (lang) {
         case "en":
           S.current = const $en();
+          return SynchronousFuture<S>(S.current);
+        case "zh_CN":
+          S.current = const $zh_CN();
           return SynchronousFuture<S>(S.current);
         default:
           // NO-OP.

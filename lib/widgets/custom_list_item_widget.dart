@@ -17,7 +17,7 @@ class CustomListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Color(0x10ffffff),
       child: InkWell(
         radius: 0,
         onTap: onTap,

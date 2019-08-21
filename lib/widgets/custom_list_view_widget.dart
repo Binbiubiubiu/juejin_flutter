@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:juejin_app/providers/book_provider.dart';
 
 class CustomListView<T> extends StatefulWidget {
   const CustomListView({

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:juejin_app/generated/i18n.dart';
 import 'package:juejin_app/providers/article_provider.dart';
 import 'package:juejin_app/widgets/custom_list_item_widget.dart';
-import 'package:juejin_app/widgets/custom_list_view_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -28,7 +28,7 @@ class ExplorePage extends StatelessWidget {
                 width: 15.0,
               ),
               Text(
-                "搜索文章、用户、标签",
+                S.of(context).appbar_search_placeholder,
                 style: TextStyle(color: Color.fromRGBO(255, 255, 255, 0.4)),
               ),
             ],
@@ -59,11 +59,6 @@ class _ExploreCardListState extends State<ExploreCardList> {
   ArticleProvider _provider;
   ScrollController _scrollController;
 
-  Future<Null> _refresh() async {
-    await Future.delayed(Duration(seconds: 3), () {
-      _provider.getData(true);
-    });
-  }
 
   @override
   void initState() {
@@ -84,7 +79,11 @@ class _ExploreCardListState extends State<ExploreCardList> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _provider = Provider.of<ArticleProvider>(context);
+
+    setState(() {
+      _provider = Provider.of<ArticleProvider>(context);
+    });
+
   }
 
   @override
@@ -101,12 +100,14 @@ class _ExploreCardListState extends State<ExploreCardList> {
     var column = Column(
       children: [],
     );
+//
 
     var list = Provider.of<ArticleProvider>(context).data;
 
     list.forEach((item) {
       column.children
         ..add(Divider(
+          color: Colors.grey,
           height: 1.0,
         ))
         ..add(CustomListItem(
@@ -206,7 +207,7 @@ class _ExploreCardListState extends State<ExploreCardList> {
 
   Widget _renderTop() {
     return Container(
-      color: Colors.white,
+      color: Color(0x10ffffff),
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: Row(
         children: <Widget>[
@@ -294,7 +295,7 @@ class ExploreTabBtnBar extends StatelessWidget {
         ],
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color(0x10ffffff),
       ),
     );
   }

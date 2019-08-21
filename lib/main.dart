@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:juejin_app/providers/i18n_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'generated/i18n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:juejin_app/pages/login_page.dart';
 import 'package:juejin_app/pages/home_page.dart';
 import 'package:juejin_app/pages/activity_page.dart';
@@ -6,28 +12,41 @@ import 'package:juejin_app/pages/explore_page.dart';
 import 'package:juejin_app/pages/book_page.dart';
 import 'package:juejin_app/pages/me_page.dart';
 
-import 'package:timeago/timeago.dart' as timeago;
-
-void main(){
+void main() {
   timeago.setLocaleMessages('en', timeago.ZhCnMessages());
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<I18nProvider>(
+          builder: (context) => I18nProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
-      title: '掘金',
-      theme: ThemeData(
-        primaryColor: Color(0xFF377DF6),
-        accentColor: Color(0xFF377DF6),
-        dividerColor: Color(0xFFD8D8D8),
-        backgroundColor: Color(0xFFF6F7F9),
-      ),
-      home: MyHomePage(),
+      title: "12",
+      theme: Provider.of<I18nProvider>(context).locale.toString() != 'zh_CN'
+          ? ThemeData.dark()
+          : ThemeData.light(),
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      localeResolutionCallback:
+          S.delegate.resolution(fallback: const Locale('zh', 'CN')),
+      supportedLocales: S.delegate.supportedLocales,
+      home: LayoutBuilder(builder: (context, constraints) {
+        return Localizations.override(
+          context: context,
+          locale: Provider.of<I18nProvider>(context).locale,
+          child: MyHomePage(),
+        );
+      }),
 //      initialRoute: '/',
       routes: {
         '/login': (ctx) => LoginPage(),
@@ -38,7 +57,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
-
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -76,14 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
     MePage(),
   ];
 
-  int _currentIndex = 2;
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:juejin_app/widgets/custom_list_view_widget.dart';
 import 'package:juejin_app/widgets/custom_list_item_widget.dart';
@@ -69,7 +68,7 @@ class BookTabPage extends StatefulWidget {
   _BookTabPageState createState() => _BookTabPageState();
 }
 
-class _BookTabPageState extends State<BookTabPage> with AutomaticKeepAliveClientMixin {
+class _BookTabPageState extends State<BookTabPage> {
 
   @override
   void initState() {
@@ -109,8 +108,8 @@ class _BookTabPageState extends State<BookTabPage> with AutomaticKeepAliveClient
                   offset: Offset(1.0, 2.0),
                   blurRadius: 6.0),
             ]),
-            child: CachedNetworkImage(
-              imageUrl: book.img,
+            child: Image.network(
+              book.img,
               width: 60.0,
             ),
           ),
@@ -126,7 +125,6 @@ class _BookTabPageState extends State<BookTabPage> with AutomaticKeepAliveClient
                   Text(
                     book.title,
                     style: TextStyle(
-                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 14.0,
                     ),
@@ -138,7 +136,6 @@ class _BookTabPageState extends State<BookTabPage> with AutomaticKeepAliveClient
                       TextSpan(
                         text: book.userData.username,
                         style: TextStyle(
-                            color: Colors.black,
                             fontWeight: FontWeight.w400,
                             fontSize: 12.0),
                       ),
@@ -190,7 +187,4 @@ class _BookTabPageState extends State<BookTabPage> with AutomaticKeepAliveClient
     );
   }
 
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

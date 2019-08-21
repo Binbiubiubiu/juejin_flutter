@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:juejin_app/generated/i18n.dart';
 import 'package:juejin_app/pages/login_page.dart';
+import 'package:juejin_app/providers/i18n_provider.dart';
+import 'package:provider/provider.dart';
 
 class MePage extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('我'),
+        title: Text(
+          '我',
+          style: TextStyle(fontSize: 20.0),
+        ),
         centerTitle: true,
       ),
       body: ListView(
@@ -19,11 +21,14 @@ class MePage extends StatelessWidget {
     );
   }
 
-  List<Widget> _renderListView(){
-
+  List<Widget> _renderListView() {
     final List list1 = [
       {"icon": "assets/me/ic_notification.png", "title": "消息中心", "action": ""},
-      {"icon": "assets/me/user_liked_pin.png", "title": "我赞过的", "action": "215篇"},
+      {
+        "icon": "assets/me/user_liked_pin.png",
+        "title": "我赞过的",
+        "action": "215篇"
+      },
       {
         "icon": "assets/me/user_collectionset.png",
         "title": "收藏集",
@@ -38,7 +43,7 @@ class MePage extends StatelessWidget {
       {"icon": "assets/me/ic_dynamic_tag.png", "title": "标签管理", "action": "80个"}
     ];
 
-    final List list2=[
+    final List list2 = [
       {
         "icon": "assets/me/ic_user_data_read.png",
         "title": "阅读过的文章",
@@ -55,27 +60,26 @@ class MePage extends StatelessWidget {
     ];
     _renderList.addAll(ListTile.divideTiles(
       tiles: list1.map((item) => CellItem(
-        icon: item["icon"],
-        title: item["title"],
-        action: item["action"],
-        onTap: () {},
-      )),
+            icon: item["icon"],
+            title: item["title"],
+            action: item["action"],
+            onTap: () {},
+          )),
       color: Colors.grey,
     ).toList());
 
     _renderList.addAll([
       SizedBox(height: 10.0),
       EveningCellItem(),
-      Divider(height: 1.0,),
     ]);
 
     _renderList.addAll(ListTile.divideTiles(
       tiles: list2.map((item) => CellItem(
-        icon: item["icon"],
-        title: item["title"],
-        action: item["action"],
-        onTap: () {},
-      )),
+            icon: item["icon"],
+            title: item["title"],
+            action: item["action"],
+            onTap: () {},
+          )),
       color: Colors.grey,
     ).toList());
 
@@ -104,7 +108,7 @@ class CellItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Color(0x10FFFFFF),
       child: ListTile(
         dense: true,
         onTap: onTap,
@@ -127,15 +131,34 @@ class CellItem extends StatelessWidget {
   }
 }
 
-class EveningCellItem extends StatelessWidget {
+class EveningCellItem extends StatefulWidget {
+  @override
+  _EveningCellItemState createState() => _EveningCellItemState();
+}
+
+class _EveningCellItemState extends State<EveningCellItem> {
+  bool isOk = false;
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Color(0x10FFFFFF),
+        border: Border(
+          bottom: Divider.createBorderSide(context,width: 1.6, color: Theme.of(context).dividerColor),
+        ),
+      ),
       child: SwitchListTile(
         dense: true,
-        value: false,
-        onChanged: (val) {},
+        value: Provider.of<I18nProvider>(context).locale.toString() != 'zh_CN',
+        onChanged: (val) {
+          setState(() {
+            isOk = val;
+          });
+          print(Provider.of<I18nProvider>(context).locale.toLanguageTag());
+          Provider.of<I18nProvider>(context)
+              .setLocale(val ? Locale("en", "") : Locale("zh", "CN"));
+        },
         secondary: Image.asset(
           "assets/me/ic_night.png",
           width: 24.0,
@@ -146,6 +169,30 @@ class EveningCellItem extends StatelessWidget {
   }
 }
 
+//class EveningCellItem extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//
+//
+//    return Material(
+//      color: Colors.white,
+//      child: SwitchListTile(
+//        dense: true,
+//        value: Provider.of<I18nProvider>(context).locale.toLanguageTag()=='zh',
+//        onChanged: (val) {
+//
+//          Provider.of<I18nProvider>(context).setLocale(val?Locale("zh","CN"):Locale("en",""));
+//        },
+//        secondary: Image.asset(
+//          "assets/me/ic_night.png",
+//          width: 24.0,
+//        ),
+//        title: Text("夜间模式", style: TextStyle(fontSize: 14.0)),
+//      ),
+//    );
+//  }
+//}
+
 class UserCell extends StatefulWidget {
   @override
   _UserCellState createState() => _UserCellState();
@@ -154,11 +201,33 @@ class UserCell extends StatefulWidget {
 class _UserCellState extends State<UserCell> {
   ImageProvider _actor = AssetImage("assets/me/default_avatar.png");
 
-  String _name = "登录/注册";
-  String _job = "添加职位@ 添加公司";
+  String _name;
+  String _job;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _name = S.of(context).me_login_title_placeholder;
+    _job = S.of(context).me_login_subtitle_placeholder;
+  }
 
   void _login() {
-    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>LoginPage())).then((data) {
+    Navigator.of(context)
+        .push(
+      PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+        return LoginPage();
+      }, transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return new SlideTransition(
+          position: new Tween<Offset>(
+            begin: const Offset(1.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ).animate(animation),
+          child: child,
+        );
+      }),
+    )
+        .then((data) {
       if (data == null) return;
 
       Map<String, String> userInfo = Map.of(data);
@@ -176,9 +245,10 @@ class _UserCellState extends State<UserCell> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Color(0x10FFFFFF),
       child: ListTile(
         onTap: _login,
+        contentPadding: EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
         leading: Padding(
           padding: EdgeInsets.only(right: 10.0),
           child: CircleAvatar(
@@ -189,12 +259,20 @@ class _UserCellState extends State<UserCell> {
         title: Text(
           '$_name',
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 18.0),
+          maxLines: 1,
+          style: TextStyle(
+            fontSize: 18.0,
+            textBaseline: TextBaseline.alphabetic,
+          ),
         ),
         subtitle: Text(
           _job,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 12.0),
+          maxLines: 1,
+          style: TextStyle(
+            fontSize: 12.0,
+            textBaseline: TextBaseline.alphabetic,
+          ),
         ),
         trailing: Transform(
           transform: Matrix4(0.75, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
