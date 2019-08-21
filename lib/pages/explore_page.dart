@@ -299,8 +299,8 @@ class ExploreTabBtnBar extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Provider.of<I18nProvider>(context).isNight
-            ? Color(0xffffffff)
-            : Color(0x10ffffff),
+            ?Color(0x10ffffff)
+            :Color(0xffffffff) ,
       ),
     );
   }
