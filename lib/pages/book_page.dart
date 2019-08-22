@@ -157,7 +157,7 @@ class _BookTabPageState extends State<BookTabPage> {
                   ),
 //                  SizedBox(height: 4.0),
                   Text(
-                    "${book.lastSectionCount} 小节 · ${book.buyCount}人已购买",
+                    "${book.lastSectionCount} ${S.of(context).book_section} · ${book.buyCount}${S.of(context).book_already_bought}",
                     style: TextStyle(
                       color: Colors.grey[400],
                       fontWeight: FontWeight.w400,
