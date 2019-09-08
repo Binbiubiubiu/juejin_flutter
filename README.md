@@ -7,13 +7,7 @@
 Imitate Juejin only for study(only a few page has finished)
 
 ## Some Screenshots
-<img src="Screenshots/Screenshot_20190908_232118_com.juejinapp.juejin_a.jpg" height="300em" />
-<img src="Screenshots/Screenshot_20190908_232126_com.juejinapp.juejin_a.jpg" height="300em" />
-<img src="Screenshots/Screenshot_20190908_232135_com.juejinapp.juejin_a.jpg" height="300em"/>
-<img src="Screenshots/Screenshot_20190908_232138_com.juejinapp.juejin_a.jpg" height="300em"/>
-<img src="Screenshots/Screenshot_20190908_232147_com.juejinapp.juejin_a.jpg" height="300em" />
-<img src="Screenshots/Screenshot_20190908_232201_com.juejinapp.juejin_a.jpg" height="300em" />
-<img src="Screenshots/Screenshot_20190908_232228_com.juejinapp.juejin_a.jpg" height="300em"/>
+<img src="Screenshots/Screenshot_20190908_232118_com.juejinapp.juejin_a.jpg" width="240" /><img src="Screenshots/Screenshot_20190908_232126_com.juejinapp.juejin_a.jpg" width="240"/><img src="Screenshots/Screenshot_20190908_232135_com.juejinapp.juejin_a.jpg" width="240"/><img src="Screenshots/Screenshot_20190908_232138_com.juejinapp.juejin_a.jpg" width="240"/><img src="Screenshots/Screenshot_20190908_232147_com.juejinapp.juejin_a.jpg" width="240" /><img src="Screenshots/Screenshot_20190908_232201_com.juejinapp.juejin_a.jpg" width="240"/><img src="Screenshots/Screenshot_20190908_232228_com.juejinapp.juejin_a.jpg" width="240"/>
 
 ## use plugins
 - flutter_webview_plugin
