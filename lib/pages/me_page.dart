@@ -76,6 +76,7 @@ class MePage extends StatelessWidget {
       )
     ];
     _renderList.addAll(ListTile.divideTiles(
+      context: context,
       tiles: list1.map((item) => CellItem(
             icon: item["icon"],
             title: item["title"],
@@ -90,6 +91,7 @@ class MePage extends StatelessWidget {
     ]);
 
     _renderList.addAll(ListTile.divideTiles(
+      context: context,
       tiles: list2.map((item) => item == 'switchlTile'
           ? EveningCellItem()
           : CellItem(
