@@ -1,8 +1,8 @@
 # JueJin App
-![image](https://img.shields.io/github/issues/Wildlifes/flutter_study_app)
-![image](https://img.shields.io/github/forks/Wildlifes/flutter_study_app)
-![image](https://img.shields.io/github/stars/Wildlifes/flutter_study_app)
-![image](https://img.shields.io/github/license/Wildlifes/flutter_study_app)
+![image](https://img.shields.io/github/issues/Wildlifes/juejin_flutter)
+![image](https://img.shields.io/github/forks/Wildlifes/juejin_flutter)
+![image](https://img.shields.io/github/stars/Wildlifes/juejin_flutter)
+![image](https://img.shields.io/github/license/Wildlifes/juejin_flutter)
 
 Imitate Juejin only for study(only a few page has finished)
 
